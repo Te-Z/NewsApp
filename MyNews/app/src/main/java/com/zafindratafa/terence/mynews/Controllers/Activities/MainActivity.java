@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Configure Toolbar
         this.configureToolbar();
     }
 
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureToolbar(){
         // Get the toolbar view inside the activity layout
-        setSupportActionBar(mToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        // Sets the Toolbar
+        setSupportActionBar(toolbar);
     }
 }

@@ -37,14 +37,8 @@ public class MainActivityTest {
         onView(withId(R.id.activity_main_toolbar)).check(matches(isDisplayed()));
     }
 
-    /*// Test position of elements
     @Test
-    public void toolbarPositionTest() throws Exception {
-        onView(withId(R.id.activity_main_toolbar)).check(isCompletelyAbove(withId(R.id.activity_main_tabs)));
+    public void menuDisplayTest() throws Exception {
+        onView(withId(R.id.menu_activity_main_search)).check(matches(isDisplayed()));
     }
-
-    @Test
-    public void tabsPositionTest() throws Exception {
-        onView(withId(R.id.activity_main_tabs)).check(isPartiallyAbove(R.id.activity_main_viewpager));
-    }*/
 }
