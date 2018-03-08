@@ -1,0 +1,18 @@
+<LinearLayout
+    android:id="@+id/fragment_top_stories_rootview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.zafindratafa.terence.mynews.Controllers.Fragments.TopStoriesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/fragment_top_stories_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="hello_blank_fragment"/>
+
+</LinearLayout>
