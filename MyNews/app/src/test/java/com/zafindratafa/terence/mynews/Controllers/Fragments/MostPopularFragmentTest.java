@@ -11,20 +11,21 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFragment;
 
 /**
- * Created by maverick on 07/03/18.
+ * Created by maverick on 09/03/18.
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class TopStoriesFragmentTest {
+public class MostPopularFragmentTest {
 
     @Test
     public void shouldNotBeNull() throws Exception {
-        Fragment topStoriesFragment = TopStoriesFragment.newInstance();
-        startFragment(topStoriesFragment);
-        assertNotNull(topStoriesFragment);
+        Fragment mostPopularFragment = MostPopularFragment.newInstance();
+        startFragment(mostPopularFragment);
+        assertNotNull(mostPopularFragment);
     }
+
 }

@@ -4,7 +4,7 @@ language : android
 env:
   global:
   #Android API Version for the code
-   - ANDROID_API_LEVEL=26
+   - ANDROID_API_LEVEL=27
    
   #Android API Version for the emulator 
    - EMULATOR_API_LEVEL=22

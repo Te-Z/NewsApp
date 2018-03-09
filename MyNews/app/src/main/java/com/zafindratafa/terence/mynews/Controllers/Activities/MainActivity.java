@@ -1,5 +1,6 @@
 package com.zafindratafa.terence.mynews.Controllers.Activities;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,7 @@ import android.view.Menu;
 
 import com.zafindratafa.terence.mynews.R;
 
+import Adapters.PageAdapter;
 import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Configure Toolbar
         this.configureToolbar();
+        // Configure ViewPager
+        this.configureViewPager();
     }
 
     @Override
@@ -39,5 +43,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         // Sets the Toolbar
         setSupportActionBar(toolbar);
+    }
+
+    private void configureViewPager(){
+        ViewPager pager = (ViewPager) findViewById(R.id.activity_main_viewpager);
+        pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
     }
 }

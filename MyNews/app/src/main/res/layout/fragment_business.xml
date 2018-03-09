@@ -1,18 +1,18 @@
 <LinearLayout
-    android:id="@+id/fragment_top_stories_rootview"
+    android:id="@+id/fragment_business_rootview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.zafindratafa.terence.mynews.Controllers.Fragments.TopStoriesFragment">
+    tools:context="com.zafindratafa.terence.mynews.Controllers.Fragments.BusinessFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/fragment_top_stories_title"
+        android:id="@+id/fragment_business_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Top Stories Fragment"/>
+        android:text="Business Fragment"/>
 
 </LinearLayout>
