@@ -20,6 +20,7 @@ import static android.support.test.espresso.assertion.PositionAssertions.isParti
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by maverick on 06/03/18.
@@ -64,6 +65,24 @@ public class MainActivityTest {
     public void isBusinessFragmentShowing() throws Exception {
         onView(withId(R.id.activity_main_viewpager)).perform(swipeLeft());
         onView(withId(R.id.activity_main_viewpager)).perform(swipeLeft());
+        onView(withId(R.id.fragment_business_title)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void isTopStoriesTabDisplayed() throws Exception {
+        onView(withText("TOP STORIES")).perform(click());
+        onView(withId(R.id.fragment_top_stories_title)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void isMostPopularTabDisplayed() throws Exception {
+        onView(withText("MOST POPULAR")).perform(click());
+        onView(withId(R.id.fragment_most_popular_title)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void isBusinessTabDisplayed() throws Exception {
+        onView(withText("BUSINESS")).perform(click());
         onView(withId(R.id.fragment_business_title)).check(matches(isDisplayed()));
     }
 }

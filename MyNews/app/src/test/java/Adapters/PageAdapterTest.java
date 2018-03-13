@@ -5,6 +5,7 @@ package Adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.zafindratafa.terence.mynews.Adapters.PageAdapter;
 import com.zafindratafa.terence.mynews.BuildConfig;
 import com.zafindratafa.terence.mynews.Controllers.Fragments.BusinessFragment;
 import com.zafindratafa.terence.mynews.Controllers.Fragments.MostPopularFragment;
@@ -19,6 +20,7 @@ import org.robolectric.annotation.Config;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.mock;
 import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFragment;
 
@@ -62,8 +64,32 @@ public class PageAdapterTest {
     }
 
     @Test
+    public void getDefaultItem() throws Exception {
+        assertEquals(null, mPageAdapter.getItem(3));
+    }
+
+    @Test
     public void countViews() throws Exception {
         assertEquals(3, mPageAdapter.getCount());
     }
 
+    @Test
+    public void getTopStoriesTitle() throws Exception {
+        assertEquals("TOP STORIES", mPageAdapter.getPageTitle(0));
+    }
+
+    @Test
+    public void getMostPopularTitle() throws Exception {
+        assertEquals("MOST POPULAR", mPageAdapter.getPageTitle(1));
+    }
+
+    @Test
+    public void getBusinessTitle() throws Exception {
+        assertEquals("BUSINESS", mPageAdapter.getPageTitle(2));
+    }
+
+    @Test
+    public void getDefaultTitle() throws Exception {
+        assertEquals(null, mPageAdapter.getPageTitle(3));
+    }
 }
