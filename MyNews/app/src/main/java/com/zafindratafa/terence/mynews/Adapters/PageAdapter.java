@@ -22,9 +22,9 @@ public class PageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0:
+            case 0: // Page number 1
                 return TopStoriesFragment.newInstance();
-            case 1:
+            case 1: // Page number 2
                 return MostPopularFragment.newInstance();
             case 2:
                 return BusinessFragment.newInstance();
@@ -40,15 +40,21 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+        String page = new String();
         switch (position){
             case 0:
-                return "TOP STORIES";
+                page = "TOP STORIES";
+                break;
             case 1:
-                return "MOST POPULAR";
+                page = "MOST POPULAR";
+                break;
             case 2:
-                return "BUSINESS";
+                page = "BUSINESS";
+                break;
             default:
-                return null;
+                page = "COUCOU !";
+                break;
         }
+        return page;
     }
 }
