@@ -32,9 +32,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.zafindratafa.terence.mynews.Controllers.Fragments.SwipeRefreshMatchers.withCustomConstraints;
-import static org.hamcrest.CoreMatchers.not;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
 
 /**
@@ -75,24 +73,5 @@ public class TopStoriesFragmentAndroidTest {
         onView(withId(R.id.fragment_top_stories_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.activity_web_webview)).check(matches(isDisplayed()));
         Espresso.pressBack();
-    }
-
-    @Test
-    public void swipeRefreshTopStoriesTest() throws Exception {
-        mTestActivity = mMainActivityActivityTestRule.getActivity();
-        mTopStoriesFragment = mTestActivity.getSupportFragmentManager().getFragments().get(0);
-        mSwipeRefreshLayout = mTopStoriesFragment.getView().findViewById(R.id.fragment_top_stories_swipe_container);
-        int count = 0;
-        Boolean answer = false;
-
-        while (!mSwipeRefreshLayout.isRefreshing() && count<5){
-            onView(withId(R.id.fragment_top_stories_recycler_view)).perform(withCustomConstraints(swipeDown(), isDisplayingAtLeast(85)));
-            if (mSwipeRefreshLayout.isRefreshing() == true){
-                answer = true;
-            } else {
-                count++;
-            }
-        }
-        assertTrue(answer == true);
     }
 }
