@@ -26,7 +26,7 @@ public interface NYTService {
     Observable<MostPopular> getMostPopular(@Path("section") String section);
 
     @GET("search/v2/articlesearch.json")
-    Observable<ArticleSearch> getArticleSearch(@Query(value = "q", encoded = true) String query,
+    Observable<ArticleSearch> getArticleSearch(@Query("q") String query,
                                                @Query("begin_date") String beginDate,
                                                @Query("end_date") String endDate,
                                                @Query("fq") String newsDesk,

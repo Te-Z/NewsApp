@@ -42,7 +42,7 @@ public class NYTStreamsTest {
         Log.e("Copyright", "return: "+original.length());
         for (int i = 0; i < copyright.length(); i++){
             Log.e("Char", "Copyright: "+copyright.charAt(i)+"\nOriginal: "+original.charAt(i));
-            assertTrue("Copyright char at index n°"+i, copyright.charAt(i) == original.charAt(i));
+            assertEquals(original.charAt(i), copyright.charAt(i));
         }
 
         // ----------------------
@@ -65,7 +65,7 @@ public class NYTStreamsTest {
         Log.e("Copyright", "return: "+original.length());
         for (int i = 0; i < copyright.length(); i++){
             Log.e("Char", "Copyright: "+copyright.charAt(i)+"\nOriginal: "+original.charAt(i));
-            assertTrue("Copyright char at index n°"+i, copyright.charAt(i) == original.charAt(i));
+            assertEquals(original.charAt(i), copyright.charAt(i));
         }
 
         // ----------------------
@@ -75,21 +75,21 @@ public class NYTStreamsTest {
         // Get the stream
         Observable<MostPopular> mostPopularObservable = NYTStreams.streamFetchMostPopular("all-sections");
         // Create a new TestObserver
-        testObserver = new TestObserver<>();
+        TestObserver<MostPopular> testObserver1 = new TestObserver<>();
         // Launch observable
-        topStoriesObservable.subscribeWith(testObserver)
+        mostPopularObservable.subscribeWith(testObserver1)
                 .assertNoErrors() // Check if no errors
                 .assertNoTimeout() // Check if no timeout
                 .awaitTerminalEvent(); // Avait the stream terminated before continue
 
         // Get fetched top stories
-        copyright = testObserver.values().get(0).getCopyright();
+        copyright = testObserver1.values().get(0).getCopyright();
         Log.e("Copyright", "return: "+copyright.length());
-        original = "Copyright (c) 2018 The New York Times Company. All Rights Reserved.";
+        original = "Copyright (c) 2018 The New York Times Company.  All Rights Reserved.";
         Log.e("Copyright", "return: "+original.length());
         for (int i = 0; i < copyright.length(); i++){
             Log.e("Char", "Copyright: "+copyright.charAt(i)+"\nOriginal: "+original.charAt(i));
-            assertTrue("MostPopular i= "+i, copyright.charAt(i) == original.charAt(i));
+            assertEquals(original.charAt(i), copyright.charAt(i));
         }
 
         // ----------------------
@@ -97,11 +97,11 @@ public class NYTStreamsTest {
         // ----------------------
 
         // Get the stream
-        Observable<ArticleSearch> articleSearchObservable = NYTStreams.streamFetchArticleSearch("trump", "20180101", "20180228", "news_desk(\"\")", "45f44030dcab4a4cacdefd4dd7418bfa");
+        Observable<ArticleSearch> articleSearchObservable = NYTStreams.streamFetchArticleSearch("trump", "", "", "news_desk(\"\")", "45f44030dcab4a4cacdefd4dd7418bfa");
         // Create a new TestObserver
-        testObserver = new TestObserver<>();
+        TestObserver<ArticleSearch> testObserver2 = new TestObserver<>();
         // Launch observable
-        topStoriesObservable.subscribeWith(testObserver)
+        articleSearchObservable.subscribeWith(testObserver2)
                 .assertNoErrors() // Check if no errors
                 .assertNoTimeout() // Check if no timeout
                 .awaitTerminalEvent(); // Avait the stream terminated before continue

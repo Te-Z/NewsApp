@@ -1,5 +1,6 @@
 package com.zafindratafa.terence.mynews.Controllers.Activities;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -9,12 +10,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.zafindratafa.terence.mynews.Adapters.PageAdapter;
 import com.zafindratafa.terence.mynews.R;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_activity_main_search:
-                Toast.makeText(this, item.getTitle() + "clicked !", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
             case R.id.menu_params_notifications:
                 Toast.makeText(this, item.getTitle() + "clicked !", Toast.LENGTH_LONG).show();

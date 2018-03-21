@@ -26,9 +26,6 @@ public class Doc {
     @SerializedName("print_page")
     @Expose
     private String printPage;
-    @SerializedName("blog")
-    @Expose
-    private List<Object> blog = null;
     @SerializedName("source")
     @Expose
     private String source;
@@ -104,14 +101,6 @@ public class Doc {
 
     public void setPrintPage(String printPage) {
         this.printPage = printPage;
-    }
-
-    public List<Object> getBlog() {
-        return blog;
-    }
-
-    public void setBlog(List<Object> blog) {
-        this.blog = blog;
     }
 
     public String getSource() {

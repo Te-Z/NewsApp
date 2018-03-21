@@ -80,22 +80,6 @@ public class DocTest {
     }
 
     @Test
-    public void getBlog() throws Exception {
-        List<Object> objectList = new ArrayList<>();
-        objectList.add(new Object());
-        mDoc.setBlog(objectList);
-        assertTrue("getBlog", mDoc.getBlog() == objectList);
-    }
-
-    @Test
-    public void setBlog() throws Exception {
-        List<Object> objectList = new ArrayList<>();
-        objectList.add(new Object());
-        mDoc.setBlog(objectList);
-        assertTrue("setBlog", mDoc.getBlog() == objectList);
-    }
-
-    @Test
     public void getSource() throws Exception {
         mDoc.setSource("getSource");
         assertTrue("getSource", mDoc.getSource() == "getSource");
