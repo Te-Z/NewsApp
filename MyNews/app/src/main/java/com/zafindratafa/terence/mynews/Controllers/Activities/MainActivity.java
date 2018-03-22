@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 startActivity(new Intent(this, SearchActivity.class));
                 return true;
             case R.id.menu_params_notifications:
-                Toast.makeText(this, item.getTitle() + "clicked !", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, NotifActivity.class));
                 return true;
             case R.id.menu_params_about:
                 Toast.makeText(this, item.getTitle() + "clicked !", Toast.LENGTH_LONG).show();

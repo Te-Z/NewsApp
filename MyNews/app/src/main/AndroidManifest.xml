@@ -3,6 +3,7 @@
           package="com.zafindratafa.terence.mynews">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -25,11 +26,13 @@
         <activity
             android:name=".Controllers.Activities.ResultActivity"
             android:parentActivityName=".Controllers.Activities.SearchActivity">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Controllers.Activities.SearchActivity"/>
         </activity>
+        <activity android:name=".Controllers.Activities.NotifActivity">
+        </activity>
+        <receiver android:name=".Utils.NotificationReceiver"/>
     </application>
 
 </manifest>

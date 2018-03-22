@@ -42,9 +42,17 @@ public class SearchActivityTest {
     }
 
     @Test
-    public void errorTest() throws Exception {
+    public void noQueryTermErrorTest() throws Exception {
         onView(withId(R.id.form_search_button)).perform(click());
         onView(withId(R.id.form_search_layout)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void checkboxesError() throws Exception {
+        onView(withId(R.id.form_search_query)).perform(typeText("Trump"));
+        Espresso.pressBack();
+        onView(withId(R.id.form_search_button)).perform(click());
+        onView(withId(R.id.form_search_warning_checkboxes)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -54,7 +62,7 @@ public class SearchActivityTest {
         Espresso.pressBack();
         onView(withId(R.id.form_search_button)).perform(click());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -62,13 +70,13 @@ public class SearchActivityTest {
     }
 
     @Test
-    public void resultRecyclerViewTest() throws Exception{
+    public void resultWebViewTest() throws Exception{
         onView(withId(R.id.form_search_query)).perform(typeText("Trump"));
         onView(withId(R.id.form_search_right_checkBox_politics)).perform(click());
         Espresso.pressBack();
         onView(withId(R.id.form_search_button)).perform(click());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

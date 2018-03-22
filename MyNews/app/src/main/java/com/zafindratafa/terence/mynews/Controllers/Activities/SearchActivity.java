@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zafindratafa.terence.mynews.R;
@@ -41,6 +42,8 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.form_search_todate)
     EditText searchToDate;
     // Checkboxes
+    @BindView(R.id.form_search_warning_checkboxes)
+    TextView mCheckboxesTextview;
     @BindView(R.id.form_search_left_checkBox_arts)
     CheckBox artsCheckBox;
     @BindView(R.id.form_search_left_checkBox_business)
@@ -56,9 +59,6 @@ public class SearchActivity extends AppCompatActivity {
     // Search button
     @BindView(R.id.form_search_button)
     Button searchButton;
-    // Notifications switch
-    @BindView(R.id.form_search_switch_notif)
-    Switch notifSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +75,22 @@ public class SearchActivity extends AppCompatActivity {
         this.configureEditText(searchFromDate);
         this.configureEditText(searchToDate);
 
+        // Configure the launch button
+        launchResearch();
+    }
+
+    // ---------------
+    // ACTION
+    // ---------------
+
+    private void launchResearch(){
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(searchQuery.getText())) {
                     searchQuery.setError("This field is required !");
+                } else if (checkingCheckboxes() == false){
+                    mCheckboxesTextview.setVisibility(View.VISIBLE);
                 } else {
                     Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
                     // get the query term(s)
@@ -120,7 +131,6 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     // ---------------
@@ -161,6 +171,10 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    // -------------
+    // UTILS
+    // -------------
+
     // Create a piece or URI with checked checkboxes
     private String checkBoxString(){
         String checkString = null;
@@ -182,5 +196,24 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         return checkString+"\")";
+    }
+
+    // Check if one checkbox is checked
+    private boolean checkingCheckboxes() {
+        Boolean checkCheckboxes = false;
+
+        List<CheckBox> checkBoxes = new ArrayList<>();
+        checkBoxes.add(artsCheckBox);
+        checkBoxes.add(businessCheckBox);
+        checkBoxes.add(entrepreneursCheckBox);
+        checkBoxes.add(politicsCheckBox);
+        checkBoxes.add(sportsCheckBox);
+        checkBoxes.add(travelCheckBox);
+
+        for (CheckBox checkBox: checkBoxes){
+            if (checkBox.isChecked()) checkCheckboxes = true;
+        }
+
+        return checkCheckboxes;
     }
 }

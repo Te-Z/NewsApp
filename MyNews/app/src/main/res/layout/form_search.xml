@@ -45,6 +45,7 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center_vertical">
 
+
         <LinearLayout
             android:id="@+id/form_search_checkBoxes_left"
             android:layout_width="match_parent"
@@ -106,6 +107,16 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/form_search_warning_checkboxes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="You must check at least one box."/>
 
     <Button
         android:id="@+id/form_search_button"

@@ -56,6 +56,7 @@ public class MainActivityTest {
     @Test
     public void menuDisplayTest() throws Exception {
         onView(withId(R.id.menu_activity_main_search)).perform(click());
+        onView(withId(R.id.activity_search_toolbar)).check(matches(isDisplayed()));
     }
 
     // -----------------------
@@ -79,13 +80,13 @@ public class MainActivityTest {
     public void businessRecyclerViewTest() throws Exception {
         onView(withText("BUSINESS")).perform(click());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         onView(withId(R.id.fragment_business_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -113,13 +114,13 @@ public class MainActivityTest {
     public void mostPopularRecyclerViewTest() throws Exception {
         onView(withText("MOST POPULAR")).perform(click());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         onView(withId(R.id.fragment_most_popular_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -147,7 +148,7 @@ public class MainActivityTest {
     @Test
     public void topStoriesRecyclerViewTest() throws Exception {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
