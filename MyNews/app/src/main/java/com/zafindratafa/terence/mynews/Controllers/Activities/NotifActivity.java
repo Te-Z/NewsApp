@@ -1,20 +1,19 @@
 package com.zafindratafa.terence.mynews.Controllers.Activities;
 
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -25,7 +24,9 @@ import com.zafindratafa.terence.mynews.Utils.NotificationReceiver;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,9 @@ public class NotifActivity extends AppCompatActivity {
     // Query Search
     @BindView(R.id.form_search_query)
     EditText searchQuery;
+    // Dates
+    @BindView(R.id.form_search_dates)
+    LinearLayout datesLayout;
     // Checkboxes
     @BindView(R.id.form_search_warning_checkboxes)
     TextView mCheckboxesTextview;
@@ -63,18 +67,39 @@ public class NotifActivity extends AppCompatActivity {
     Switch notifSwitch;
 
     // For Notification
-    public static final int uniqueID = 100;
+    public static final int UNIQUE_ID = 100;
+
+    // For Preferences
+    private SharedPreferences mPreferences;
+    public static final String USER_PREFERENCES = "USER_PREFERENCES";
+
+    // For Data
+    public static final String SEARCH_PREF = "SEARCH_PREF";
+    public static final String CHECKBOX_PREF = "CHECKBOX_PREF";
+    public static final String CHECKED_PREF = "CHECKED_PREF";
+    public static final String SWITCH_PREF = "SWITCH_PREF";
+    private Set<String> set = new HashSet<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
         ButterKnife.bind(this);
+        // Set the UI
+        mNotifLayout.setVisibility(View.VISIBLE);
+        searchButton.setVisibility(View.GONE);
+        datesLayout.setVisibility(View.GONE);
 
         // Add back button
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // init SharedPreferences
+        mPreferences = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+
+        // loading last preferences if they exists
+        loadingPreferences();
 
         // Configure the notification switch
         this.configureNotifications();
@@ -85,11 +110,6 @@ public class NotifActivity extends AppCompatActivity {
     // ---------------
 
     private void configureNotifications(){
-        // Set the UI
-        mNotifLayout.setVisibility(View.VISIBLE);
-        searchButton.setVisibility(View.GONE);
-
-
         notifSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -99,11 +119,16 @@ public class NotifActivity extends AppCompatActivity {
                     }else if(checkingCheckboxes() == false){
                         mCheckboxesTextview.setVisibility(View.VISIBLE);
                     } else {
+                        savingPreferences();
+                        // prepare notification
+                        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), UNIQUE_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        // repeat notification every day at 12am
                         Calendar calendar = Calendar.getInstance();
-                        calendar.set(Calendar.HOUR_OF_DAY, 12);
-
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), uniqueID, configIntent(), PendingIntent.FLAG_UPDATE_CURRENT);
-
+                        calendar.set(Calendar.HOUR_OF_DAY, 11);
+                        calendar.set(Calendar.MINUTE, 23);
+                        calendar.set(Calendar.SECOND, 0);
                         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
                     }
@@ -116,15 +141,53 @@ public class NotifActivity extends AppCompatActivity {
     // DATA
     // ---------------
 
-    private Intent configIntent(){
-        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+    private void savingPreferences(){
+        mPreferences.edit().clear();
+        mPreferences.edit().putString(SEARCH_PREF, searchQuery.getText().toString()).apply();
+        mPreferences.edit().putString(CHECKED_PREF, checkBoxString());
+        mPreferences.edit().putStringSet(CHECKBOX_PREF, set).apply();
+        mPreferences.edit().putBoolean(SWITCH_PREF, notifSwitch.isChecked()).apply();
+        Log.i("switch is checked: ", ""+notifSwitch.isChecked());
+    }
 
-        intent.putExtra("QUERY", searchQuery.getText().toString());
-        intent.putExtra("FROM_DATE", "20000101");
-        intent.putExtra("TO_DATE", getCurrentDay());
-        intent.putExtra("CHECKBOXES", checkBoxString());
+    private void loadingPreferences(){
+        // terms of last search
+        searchQuery.setText(mPreferences.getString(SEARCH_PREF, null));
 
-        return intent;
+        // last checked checkboxes
+        set = mPreferences.getStringSet(CHECKBOX_PREF, new HashSet<String>());
+        if (set != null && !set.isEmpty()) {
+            for (String checkbox : set) {
+                switch (checkbox) {
+                    case "Arts":
+                        artsCheckBox.setChecked(true);
+                        break;
+                    case "Business":
+                        businessCheckBox.setChecked(true);
+                        break;
+                    case "Entrepreneurs":
+                        entrepreneursCheckBox.setChecked(true);
+                        break;
+                    case "Politics":
+                        politicsCheckBox.setChecked(true);
+                        break;
+                    case "Sports":
+                        sportsCheckBox.setChecked(true);
+                        break;
+                    case "Travel":
+                        travelCheckBox.setChecked(true);
+                        break;
+                    default:
+                        Log.e("Checkbox Switch Error: ", checkbox);
+                        break;
+                }
+            }
+        }
+
+        // Retrieve last switch position
+        Boolean switchBoolean = mPreferences.getBoolean(SWITCH_PREF, false);
+        Log.i("switchBoolean", ": "+switchBoolean);
+        notifSwitch.setChecked(switchBoolean);
     }
 
     // Create a piece or URI with checked checkboxes
@@ -151,23 +214,6 @@ public class NotifActivity extends AppCompatActivity {
         return checkString+"\")";
     }
 
-    private String getCurrentDay(){
-        String toDate = new String();
-
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-
-        int month = cal.get(Calendar.MONTH)+1;
-        String monthString = Integer.toString(month);
-        if (monthString.length() == 1) monthString = 0 +monthString;
-
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        String dayString = Integer.toString(day);
-        if (dayString.length() == 1) dayString = 0+dayString;
-
-        return toDate = Integer.toString(year) + monthString + dayString;
-    }
-
     // Check if one checkbox is checked
     private boolean checkingCheckboxes() {
         Boolean checkCheckboxes = false;
@@ -180,8 +226,13 @@ public class NotifActivity extends AppCompatActivity {
         checkBoxes.add(sportsCheckBox);
         checkBoxes.add(travelCheckBox);
 
+        set = new HashSet<String>();
+
         for (CheckBox checkBox: checkBoxes){
-            if (checkBox.isChecked()) checkCheckboxes = true;
+            if (checkBox.isChecked()) {
+                checkCheckboxes = true;
+                set.add(checkBox.getText().toString());
+            }
         }
 
         return checkCheckboxes;

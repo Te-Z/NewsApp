@@ -1,6 +1,7 @@
 package com.zafindratafa.terence.mynews.Controllers.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;

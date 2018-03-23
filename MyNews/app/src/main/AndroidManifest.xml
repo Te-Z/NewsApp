@@ -21,7 +21,12 @@
         </activity>
         <activity android:name=".Controllers.Activities.WebActivity">
         </activity>
-        <activity android:name=".Controllers.Activities.SearchActivity">
+        <activity
+            android:name=".Controllers.Activities.SearchActivity"
+            android:parentActivityName=".Controllers.Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Controllers.Activities.MainActivity"/>
         </activity>
         <activity
             android:name=".Controllers.Activities.ResultActivity"
@@ -30,7 +35,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Controllers.Activities.SearchActivity"/>
         </activity>
-        <activity android:name=".Controllers.Activities.NotifActivity">
+        <activity
+            android:name=".Controllers.Activities.NotifActivity"
+            android:parentActivityName=".Controllers.Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Controllers.Activities.MainActivity"/>
         </activity>
         <receiver android:name=".Utils.NotificationReceiver"/>
     </application>

@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.zafindratafa.terence.mynews.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -93,8 +95,10 @@ public class SearchActivity extends AppCompatActivity {
                     mCheckboxesTextview.setVisibility(View.VISIBLE);
                 } else {
                     Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
+
                     // get the query term(s)
                     intent.putExtra("QUERY", searchQuery.getText().toString());
+
                     // get the begin date
                     String fromDate = searchFromDate.getText().toString();
                     Log.e("fromDate", searchFromDate.getText().toString());
@@ -104,27 +108,17 @@ public class SearchActivity extends AppCompatActivity {
                         fromDate = fromDate.replace(" / ", "");
                     }
                     intent.putExtra("FROM_DATE", fromDate);
+
                     // get the end date
                     String toDate = searchToDate.getText().toString();
                     Log.e("toDate", searchToDate.getText().toString());
-                    if (toDate.length() <= 1) {
-                        Calendar cal = Calendar.getInstance();
-                        int year = cal.get(Calendar.YEAR);
-
-                        int month = cal.get(Calendar.MONTH)+1;
-                        String monthString = Integer.toString(month);
-                        if (monthString.length() == 1) monthString = 0 +monthString;
-
-                        int day = cal.get(Calendar.DAY_OF_MONTH);
-                        String dayString = Integer.toString(day);
-                        if (dayString.length() == 1) dayString = 0+dayString;
-
-                        toDate = Integer.toString(year) + monthString + dayString;
-                        Log.e("toDate", toDate);
+                    if (toDate.length() <= 1){
+                        toDate = getCurrentDay();
                     } else {
                         toDate = toDate.replace(" / ", "");
                     }
                     intent.putExtra("TO_DATE", toDate);
+
                     // get checkboxes
                     intent.putExtra("CHECKBOXES", checkBoxString());
                     startActivity(intent);
@@ -174,6 +168,17 @@ public class SearchActivity extends AppCompatActivity {
     // -------------
     // UTILS
     // -------------
+
+    // getCurrentDay into a String
+    private String getCurrentDay(){
+        Date curDate = new Date();
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String dateToStr = format.format(curDate);
+
+        return dateToStr;
+    }
+
 
     // Create a piece or URI with checked checkboxes
     private String checkBoxString(){
