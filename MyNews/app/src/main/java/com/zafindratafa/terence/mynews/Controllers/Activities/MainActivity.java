@@ -1,7 +1,6 @@
 package com.zafindratafa.terence.mynews.Controllers.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -11,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,7 +17,8 @@ import android.widget.Toast;
 import com.zafindratafa.terence.mynews.Adapters.PageAdapter;
 import com.zafindratafa.terence.mynews.R;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+
+    // For data
+    public static final String SECTION = "SECTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         this.configureNavigationView();
         this.configureViewPager();
     }
+
+    // -------------
+    // ACTION
+    // -------------
 
     // Handle actions on menu items
     @Override
@@ -79,17 +85,21 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle Navigation Item Click
+        // Handle Navigation Drawer Item Click
 
         int id= item.getItemId();
 
         switch (id){
-            case R.id.activity_main_drawer_news:
-                break;
-            case R.id.activity_main_drawer_profile:
-                break;
-            case R.id.activity_main_drawer_settings:
-                break;
+            case R.id.activity_main_drawer_automobiles:
+                sendData(getString(R.string.automobiles));
+            case R.id.activity_main_drawer_movies:
+                sendData(getString(R.string.movies));
+            case R.id.activity_main_drawer_science:
+                sendData(getString(R.string.science));
+            case R.id.activity_main_drawer_technology:
+                sendData(getString(R.string.technology));
+            case R.id.activity_main_drawer_world:
+                sendData(getString(R.string.world));
             default:
                 break;
         }
@@ -132,5 +142,28 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         TabLayout tabs = (TabLayout) findViewById(R.id.activity_main_tabs);
         tabs.setupWithViewPager(pager);
         tabs.setTabMode(TabLayout.MODE_FIXED);
+    }
+
+    // ----------------
+    // NAV DRAWER DATA
+    // ----------------
+
+    private void sendData(String section){
+        Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+        intent.putExtra("QUERY", "null");
+        intent.putExtra("FROM_DATE", "20000101");
+        intent.putExtra("TO_DATE", getCurrentDay());
+        intent.putExtra("CHECKBOXES", "news_desk(\""+section+"\")");
+        startActivity(intent);
+    }
+
+    // getCurrentDay inside a String
+    private String getCurrentDay(){
+        Date curDate = new Date();
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String dateToStr = format.format(curDate);
+
+        return dateToStr;
     }
 }

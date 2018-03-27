@@ -47,7 +47,6 @@ public class MostPopularFragment extends Fragment {
     private List<MostPopularResult> mMostPopularResults = new ArrayList<>();
     private MostPopularAdapter mMostPopularAdapter;
 
-
     public static MostPopularFragment newInstance() {
         return (new MostPopularFragment());
     }
@@ -123,7 +122,6 @@ public class MostPopularFragment extends Fragment {
         this.mDisposable = NYTStreams.streamFetchMostPopular("all-sections").subscribeWith(new DisposableObserver<MostPopular>(){
             @Override
             public void onNext(MostPopular mostPopular) {
-                Log.e("MostPopular onNext", " "+mostPopular.getMostPopularResults().get(0).getTitle()+"--");
                 // Update RecyclerView after getting results from NYT API
                 updateMostPopularUI(mostPopular.getMostPopularResults());
             }
