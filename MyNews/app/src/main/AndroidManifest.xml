@@ -12,32 +12,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controllers.Activities.MainActivity">
+        <activity
+            android:name=".Controllers.Activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.Activities.WebActivity">
+        <activity
+            android:name=".Controllers.Activities.WebActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Controllers.Activities.SearchActivity"
-            android:parentActivityName=".Controllers.Activities.MainActivity">
+            android:parentActivityName=".Controllers.Activities.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Controllers.Activities.MainActivity"/>
         </activity>
         <activity
             android:name=".Controllers.Activities.ResultActivity"
-            android:parentActivityName=".Controllers.Activities.MainActivity">
+            android:parentActivityName=".Controllers.Activities.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Controllers.Activities.MainActivity"/>
         </activity>
         <activity
             android:name=".Controllers.Activities.NotifActivity"
-            android:parentActivityName=".Controllers.Activities.MainActivity">
+            android:parentActivityName=".Controllers.Activities.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Controllers.Activities.MainActivity"/>

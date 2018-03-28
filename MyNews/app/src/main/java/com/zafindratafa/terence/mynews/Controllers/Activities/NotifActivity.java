@@ -126,8 +126,8 @@ public class NotifActivity extends AppCompatActivity {
 
                         // repeat notification every day at 12am
                         Calendar calendar = Calendar.getInstance();
-                        calendar.set(Calendar.HOUR_OF_DAY, 11);
-                        calendar.set(Calendar.MINUTE, 23);
+                        calendar.set(Calendar.HOUR_OF_DAY, 12);
+                        calendar.set(Calendar.MINUTE, 30);
                         calendar.set(Calendar.SECOND, 0);
                         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
